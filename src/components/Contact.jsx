@@ -211,7 +211,7 @@ export default function Contact() {
                               value={formData.name}
                               onChange={handleChange}
                               placeholder="Your name"
-                              className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                              className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-base sm:text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
                             />
                           </div>
 
@@ -230,7 +230,7 @@ export default function Contact() {
                               value={formData.email}
                               onChange={handleChange}
                               placeholder="your@email.com"
-                              className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                              className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-base sm:text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
                             />
                           </div>
                         </div>
@@ -251,7 +251,7 @@ export default function Contact() {
                             value={formData.subject}
                             onChange={handleChange}
                             placeholder="Project inquiry"
-                            className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
+                            className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-base sm:text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
                           />
                         </div>
 
@@ -271,7 +271,7 @@ export default function Contact() {
                             value={formData.message}
                             onChange={handleChange}
                             placeholder="Tell me about your project..."
-                            className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors resize-none"
+                            className="w-full rounded-xl bg-black border border-zinc-800 px-4 py-3 text-base sm:text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors resize-none"
                           />
                         </div>
 

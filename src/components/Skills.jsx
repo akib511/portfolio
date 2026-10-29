@@ -319,24 +319,50 @@ export default function Skills() {
     []
   );
 
+  // Pause the (expensive) globe redraws when off-screen, and stop the
+  // auto-spin for reduced-motion visitors — keeps scrolling buttery.
+  const globeRef = useRef(null);
+  const globeVisibleRef = useRef(true);
+
+  useEffect(() => {
+    const el = globeRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        globeVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Continuous rotation loop (drag adds to it, then it eases back to auto-spin)
   useEffect(() => {
     let frame;
     let last = performance.now();
+    const baseSpeed = window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches
+      ? 0 // no auto-spin, but dragging still works
+      : BASE_SPEED;
 
     const tick = (now) => {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
 
-      if (!draggingRef.current) {
-        const k = Math.min(1, dt * 2.5);
-        velRef.current += (BASE_SPEED - velRef.current) * k; // back to auto-spin
-        tiltVelRef.current += (0 - tiltVelRef.current) * k; // vertical flick fades out
-        rotRef.current = (rotRef.current + velRef.current * dt) % 360;
-        tiltRef.current = (tiltRef.current + tiltVelRef.current * dt) % 360;
+      if (globeVisibleRef.current) {
+        if (!draggingRef.current) {
+          const k = Math.min(1, dt * 2.5);
+          velRef.current += (baseSpeed - velRef.current) * k; // back to auto-spin
+          tiltVelRef.current += (0 - tiltVelRef.current) * k; // vertical flick fades out
+          rotRef.current = (rotRef.current + velRef.current * dt) % 360;
+          tiltRef.current = (tiltRef.current + tiltVelRef.current * dt) % 360;
+        }
+        setRotation(rotRef.current);
+        setTilt(tiltRef.current);
       }
-      setRotation(rotRef.current);
-      setTilt(tiltRef.current);
       frame = requestAnimationFrame(tick);
     };
 
@@ -425,6 +451,7 @@ export default function Skills() {
           {/* ============================ GLOBE ============================ */}
           <div className="flex flex-col items-center justify-center select-none">
             <div
+              ref={globeRef}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={endDrag}

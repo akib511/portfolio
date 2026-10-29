@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Intro from "@/components/Intro";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -13,6 +14,9 @@ import Activities from "@/components/Activities";
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans selection:bg-red-600/30 selection:text-white">
+      {/* 0. Opening Intro (once per session) */}
+      <Intro />
+
       {/* 1. Shared Navigation Bar */}
       <Navbar />
 

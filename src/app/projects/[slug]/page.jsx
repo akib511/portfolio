@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }) {
                                 </Reveal>
 
                                 <Reveal delay={0.08}>
-                                    <h1 className="mt-7 text-5xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+                                    <h1 className="mt-7 text-5xl font-black leading-[1.05] tracking-tight break-words sm:text-6xl lg:text-7xl">
                                         {project.title}
                                         <span className="text-red-500">.</span>
                                     </h1>

@@ -12,6 +12,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keep anchor targets clear of the sticky navbar (h-16) */
+  scroll-padding-top: 4.5rem;
   color-scheme: dark;
 }
 
@@ -55,6 +57,21 @@ body {
 
 .animate-pulse-glow {
   animation: pulseGlow 7s ease-in-out infinite;
+}
+
+/* Respect reduced-motion: stop the decorative loops and smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-float,
+  .animate-pulse-glow,
+  .hire-me-btn,
+  .hire-me-btn::before {
+    animation: none;
+  }
 }
 
 /* Hire Me Button Glow Effect */

@@ -85,7 +85,7 @@ export default function About() {
         <div className="rounded-3xl border border-zinc-800/80 bg-zinc-950/80 p-8 sm:p-10 flex flex-col justify-center space-y-6 shadow-xl hover:border-red-900/40 transition-colors duration-300">
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
             Hi! I&apos;m <span className="text-white font-bold">Shahariar Hossen Akib</span>,
-            a dedicated Frontend Developer student with a strong passion for
+            a dedicated Full-Stack web Developer with a strong passion for
             modern web technologies including <span className="text-red-400 font-semibold">React</span>,{" "}
             <span className="text-red-400 font-semibold">Next.js</span>, and modern{" "}
             <span className="text-red-400 font-semibold">JavaScript</span>. I love translating
