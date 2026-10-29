@@ -1,26 +1,221 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #f4f4f5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom subtle edgy animations */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.32;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 7s ease-in-out infinite;
+}
+
+/* Hire Me Button Glow Effect */
+.hire-me-btn {
+  animation: hire-me-glow 2s ease-in-out infinite;
+}
+
+.hire-me-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(110deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent);
+  transform: skewX(-20deg);
+  animation: hire-me-shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hire-me-btn:hover {
+  animation-play-state: paused;
+}
+
+.hire-me-btn:hover::before {
+  animation-duration: 1s;
+}
+
+@keyframes hire-me-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+  }
+
+  50% {
+    box-shadow:
+      0 0 22px rgba(239, 68, 68, 0.65),
+      0 0 38px rgba(239, 68, 68, 0.25);
+  }
+}
+
+@keyframes hire-me-shine {
+  0% {
+    left: -120%;
+  }
+
+  55%,
+  100% {
+    left: 150%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hire-me-btn,
+  .hire-me-btn::before {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Custom Cursor (rendered by src/components/CustomCursor.jsx)         */
+/* Bracketed cursor that snaps to the bounds of interactive elements.  */
+/* NOTE: rotation (idle spin + smooth unwind on hover) and the size /  */
+/* position easing are driven per-frame by the component via inline    */
+/* styles. Do NOT add a CSS animation or transition for those here —   */
+/* it would override the component's inline transform.                 */
+/* ------------------------------------------------------------------ */
+.custom-cursor {
+  position: fixed;
+  left: -100px;
+  top: -100px;
+  width: 36px;
+  height: 36px;
+  z-index: 9999;
+  pointer-events: none;
+
+  /* Subtle red glow (Black + Red theme) */
+  filter:
+    drop-shadow(0 0 4px rgba(239, 68, 68, 0.45)) drop-shadow(0 0 12px rgba(239, 68, 68, 0.25));
+}
+
+.cursor-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-color: rgba(239, 68, 68, 0.85);
+
+  border-style: solid;
+  border-width: 0;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.cursor-top-left {
+  top: 0;
+  left: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+
+.cursor-top-right {
+  top: 0;
+  right: 0;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+
+.cursor-bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+
+.cursor-bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+
+/* On hover the wrapper snaps to the element's bounds, so the corners
+   grow into a bracket frame around it. */
+.cursor-hover {
+  filter:
+    drop-shadow(0 0 5px rgba(239, 68, 68, 0.55)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3));
+}
+
+.cursor-hover .cursor-corner {
+  width: 15px;
+  height: 15px;
+  border-color: rgb(239, 68, 68);
+}
+
+.cursor-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: rgba(239, 68, 68, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-corner {
+    transition: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
 }
