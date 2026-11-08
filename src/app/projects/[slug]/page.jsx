@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+export const instant = false;
 import { notFound } from "next/navigation";
 import {
     ArrowLeft,

@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /**
- * Opening intro (plays on every page load / refresh):
+ * Opening intro:
  *   1. red speed-lines streak down from the top
  *   2. the four red corner brackets (same motif as the custom cursor)
  *      fall in along the trails and snap around the "SA" monogram
  *   3. the name types in below, then the role line
  *   4. the whole overlay zoom-fades into the website
  *
- * Skipped entirely for reduced-motion visitors. Click or press any
- * key to skip.
+ * Plays on a first visit and on every full page reload of the homepage,
+ * but NOT during Next.js client-side route navigation (including coming
+ * back from a project detail page). Skipped entirely for reduced-motion
+ * visitors. Click or press any key to skip.
  */
 
 // Decorative vertical streaks that sell the "falling fast" motion.
@@ -30,19 +32,30 @@ const CORNERS = [
     "right-0 bottom-0 border-r-[3px] border-b-[3px] rounded-br-md",
 ];
 
+// unauthorized when the homepage is reached through route navigation.
+let introPending = (() => {
+    if (typeof window === "undefined") return false; // during SSR
+    try {
+        const navigation = performance.getEntriesByType("navigation")[0];
+        return Boolean(navigation) && new URL(navigation.name).pathname === "/";
+    } catch {
+        return false;
+    }
+})();
+
 export default function Intro() {
     const [show, setShow] = useState(false);
 
-    // Play on every page load; never for reduced-motion visitors.
-    // (matchMedia is read directly so this effect runs exactly once —
-    // the useReducedMotion hook's initial null→false flip would re-run
-    // the effect and its cleanup would cancel the scheduled start.)
+   
     useEffect(() => {
+        if (!introPending) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+       
+        introPending = false;
+
         // Start on the next frame (keeps state updates out of the effect body).
-        const frame = requestAnimationFrame(() => setShow(true));
-        return () => cancelAnimationFrame(frame);
+        requestAnimationFrame(() => setShow(true));
     }, []);
 
     // Lock page scroll while the intro covers the site.
